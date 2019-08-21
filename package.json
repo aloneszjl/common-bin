@@ -1,6 +1,6 @@
 {
-  "name": "common-bin",
-  "version": "2.8.2",
+  "name": "yargs-common-bin",
+  "version": "1.0.0",
   "description": "Abstraction bin tool",
   "main": "index.js",
   "dependencies": {
