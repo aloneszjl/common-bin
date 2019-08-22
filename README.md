@@ -1,4 +1,4 @@
-# common-bin
+# yargs-common-bin
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -27,7 +27,7 @@ Abstraction bin tool wrap [yargs](http://yargs.js.org/), to provide more conveni
 ## Install
 
 ```bash
-$ npm i common-bin
+$ npm i yargs-common-bin --save
 ```
 
 ## Build a bin tool for your team
@@ -119,6 +119,10 @@ class CloneCommand extends Command {
   get description() {
     return 'Clone a repository into a new directory';
   }
+  
+  get aliases() {
+    return ['command-aliases', 'ca']
+  }
 }
 
 module.exports = CloneCommand;
@@ -163,6 +167,7 @@ Define the main logic of command
 - `yargs` - {Object} yargs instance for advanced custom usage
 - `options` - {Object} a setter, set yargs' options
 - `version` - {String} customize version, can be defined as a getter to support lazy load.
+- `aliases` - {Array<String>} current command  aliases
 - `parserOptions` - {Object} control `context` parse rule.
   - `execArgv` - {Boolean} whether extract `execArgv` to `context.execArgv`
   - `removeAlias` - {Boolean} whether remove alias key from `argv`
@@ -321,105 +326,3 @@ function sleep(ms) {
 ```
 
 see [async-bin](test/fixtures/async-bin) for more detail.
-
-
-### Bash-Completions
-
-```bash
-$ # exec below will print usage for auto bash completion
-$ my-git completion
-$ # exec below will mount auto completion to your bash
-$ my-git completion >> ~/.bashrc
-```
-
-![Bash-Completions](https://cloud.githubusercontent.com/assets/227713/23980327/0a00e1a0-0a3a-11e7-81be-23b4d54d91ad.gif)
-
-
-## Migrating from v1 to v2
-
-### bin
-
-- `run` method is not longer exist.
-
-```js
-// 1.x
-const run = require('common-bin').run;
-run(require('../lib/my_program'));
-
-// 2.x
-// require a main Command
-const Command = require('..');
-new Command().start();
-```
-
-### Program
-
-- `Program` is just a `Command` sub class, you can call it `Main Command` now.
-- `addCommand()` is replace with `add()`.
-- Recommand to use `load()` to load the whole command directory.
-
-```js
-// 1.x
-this.addCommand('test', path.join(__dirname, 'test_command.js'));
-
-// 2.x
-const Command = require('common-bin');
-const pkg = require('./package.json');
-
-class MainCommand extends Command {
-  constructor() {
-    super();
-
-    this.add('test', path.join(__dirname, 'test_command.js'));
-    // or load the entire directory
-    this.load(path.join(__dirname, 'command'));
-  }
-}
-```
-
-### Command
-
-- `help()` is not use anymore.
-- should provide `name`, `description`, `options`.
-- `* run()` arguments had change to object, recommand to use destructuring style - `{ cwd, env, argv, rawArgv }`
-  - `argv` is an object parse by `yargs`, **not `args`.**
-  - `rawArgv` is equivalent to old `args`
-
-```js
-// 1.x
-class TestCommand extends Command {
-  * run(cwd, args) {
-    console.log('run mocha test at %s with %j', cwd, args);
-  }
-}
-
-// 2.x
-class TestCommand extends Command {
-  constructor() {
-    super();
-    // my-bin test --require=co-mocha
-    this.options = {
-      require: {
-        description: 'require module name',
-      },
-    };
-  }
-
-  * run({ cwd, env, argv, rawArgv }) {
-    console.log('run mocha test at %s with %j', cwd, argv);
-  }
-
-  get description() {
-    return 'unit test';
-  }
-}
-```
-
-### helper
-
-- `getIronNodeBin` is remove.
-- `child.kill` now support signal.
-
-## License
-
-[MIT](LICENSE)
