@@ -1,11 +1,9 @@
 # yargs-common-bin
 
 [![NPM version][npm-image]][npm-url]
-[![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/common-bin.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/yargs-common-bin
-[download-url]: https://npmjs.org/package/yargs-common-bin
 
 Abstraction bin tool wrap [yargs](http://yargs.js.org/), to provide more convenient usage, support async / generator.
 
