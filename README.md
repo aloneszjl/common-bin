@@ -59,7 +59,7 @@ Just extend `Command`, and use as your bin start point.
 You can use `this.yargs` to custom yargs config, see http://yargs.js.org/docs for more detail.
 
 ```js
-const Command = require('common-bin');
+const Command = require('yargs-common-bin');
 const pkg = require('./package.json');
 
 class MainCommand extends Command {
@@ -84,7 +84,7 @@ module.exports = MainCommand;
 #### [CloneCommand](test/fixtures/my-git/command/clone.js)
 
 ```js
-const Command = require('common-bin');
+const Command = require('yargs-common-bin');
 class CloneCommand extends Command {
   constructor(rawArgv) {
     super(rawArgv);
@@ -104,7 +104,7 @@ class CloneCommand extends Command {
   get description() {
     return 'Clone a repository into a new directory';
   }
-  
+
   get aliases() {
     return ['command-aliases', 'ca']
   }
@@ -151,7 +151,7 @@ Define the main logic of command
 - `yargs` - {Object} yargs instance for advanced custom usage
 - `options` - {Object} a setter, set yargs' options
 - `version` - {String} customize version, can be defined as a getter to support lazy load.
-- `aliases` - {Array<String>} current command  aliases
+- `aliases` - {Array<String>} current command aliases
 - `parserOptions` - {Object} control `context` parse rule.
   - `execArgv` - {Boolean} whether extract `execArgv` to `context.execArgv`
   - `removeAlias` - {Boolean} whether remove alias key from `argv`
@@ -174,7 +174,7 @@ this.options = {
   },
   size: {
     description: 'choose a size',
-    choices: ['xs', 's', 'm', 'l', 'xl']
+    choices: ['xs', 's', 'm', 'l', 'xl'],
   },
 };
 ```
@@ -199,7 +199,7 @@ get version() {
 
 ```js
 // index.js
-const Command = require('common-bin');
+const Command = require('yargs-common-bin');
 const helper = require('./helper');
 class MainCommand extends Command {
   constructor(rawArgv) {
@@ -221,7 +221,7 @@ class MainCommand extends Command {
 Just need to provide `options` and `run()`.
 
 ```js
-const Command = require('common-bin');
+const Command = require('yargs-common-bin');
 class MainCommand extends Command {
   constructor(rawArgv) {
     super(rawArgv);
@@ -232,7 +232,7 @@ class MainCommand extends Command {
     };
   }
 
-  * run(context) {
+  *run(context) {
     console.log('run default command at %s', context.argv.baseDir);
   }
 }
@@ -252,7 +252,7 @@ class RemoteCommand extends Command {
     this.load(path.join(__dirname, 'remote'));
   }
 
-  * run({ argv }) {
+  *run({ argv }) {
     console.log('run remote command with %j', argv._);
   }
 
@@ -273,11 +273,15 @@ class AddCommand extends Command {
         description: 'imports every tag from the remote repository',
       },
     };
-
   }
 
-  * run({ argv }) {
-    console.log('git remote add %s to %s with tags=%s', argv.name, argv.url, argv.tags);
+  *run({ argv }) {
+    console.log(
+      'git remote add %s to %s with tags=%s',
+      argv.name,
+      argv.url,
+      argv.tags,
+    );
   }
 
   get description() {
@@ -288,12 +292,10 @@ class AddCommand extends Command {
 
 see [remote.js](test/fixtures/my-git/command/remote.js) for more detail.
 
-
 ### Async Support
 
 ```js
 class SleepCommand extends Command {
-
   async run() {
     await sleep('1s');
     console.log('sleep 1s');
