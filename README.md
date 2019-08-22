@@ -155,7 +155,6 @@ Define the main logic of command
     - `rawArgv` - the raw argv, `[ "--baseDir=simple" ]`
 - `load(fullPath)` - register the entire directory to commands
 - `add(name, target)` - register special command with command name, `target` could be full path of file or Class.
-- `alias(alias, name)` - register a command with an existing command
 - `showHelp()` - print usage message to console.
 - `options=` - a setter, shortcut for `yargs.options`
 - `usage=` - a setter, shortcut for `yargs.usage`
