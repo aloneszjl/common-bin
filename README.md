@@ -1,24 +1,11 @@
 # yargs-common-bin
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
 [![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/common-bin.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/common-bin
-[travis-image]: https://img.shields.io/travis/node-modules/common-bin.svg?style=flat-square
-[travis-url]: https://travis-ci.org/node-modules/common-bin
-[codecov-image]: https://codecov.io/gh/node-modules/common-bin/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/node-modules/common-bin
-[david-image]: https://img.shields.io/david/node-modules/common-bin.svg?style=flat-square
-[david-url]: https://david-dm.org/node-modules/common-bin
-[snyk-image]: https://snyk.io/test/npm/common-bin/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/common-bin
-[download-image]: https://img.shields.io/npm/dm/common-bin.svg?style=flat-square
-[download-url]: https://npmjs.org/package/common-bin
+[npm-url]: https://npmjs.org/package/yargs-common-bin
+[download-url]: https://npmjs.org/package/yargs-common-bin
 
 Abstraction bin tool wrap [yargs](http://yargs.js.org/), to provide more convenient usage, support async / generator.
 
